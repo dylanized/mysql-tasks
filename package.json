@@ -1,0 +1,30 @@
+{
+  "name": "mysql-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "mysql:start": "sudo launchctl load -F /Library/LaunchDaemons/com.oracle.oss.mysql.mysqld.plist",
+    "mysql:stop": "sudo launchctl unload -F /Library/LaunchDaemons/com.oracle.oss.mysql.mysqld.plist",
+    "mysql:showDB": "/usr/local/mysql/bin/mysql -u root -p -e 'show databases'",
+    "mysql:createDB": "/usr/local/mysql/bin/mysql -u root -p -e 'create database foo'",
+    "mysql:dropDB": "/usr/local/mysql/bin/mysql -u root -p -e 'DROP DATABASE foo'",
+    "mysql:showTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; show tables'",
+    "mysql:describeTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; describe bars'",
+    "mysql:createTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; CREATE TABLE bars (id INT NOT NULL AUTO_INCREMENT, title VARCHAR(120) NOT NULL, timestamp DATETIME, PRIMARY KEY (id))'",
+    "mysql:dropTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; DROP TABLE bars'",
+    "mysql:resetTable": "run-s mysql:dropTable mysql:createTable",
+    "mysql:countTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; SELECT COUNT(id) FROM bars'",
+    "mysql:selectTable": "/usr/local/mysql/bin/mysql -u root -p -e 'use foo; SELECT * FROM bars'",
+    "mysql:exportDB": "/usr/local/mysql/bin/mysqldump -u root -p foo > data/foo.sql",
+    "mysql:importDB": "/usr/local/mysql/bin/mysql -u root -p -h localhost foo < data/foo.sql",
+    "mysql:init": "run-s mysql:createDB mysql:importDB",
+    "mysql:reset": "run-s mysql:dropDB mysql:init",
+    "mysql:cli": "/usr/local/mysql/bin/mysql -u root -p"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.3"
+  }
+}
